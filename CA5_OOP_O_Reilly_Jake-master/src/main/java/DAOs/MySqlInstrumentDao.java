@@ -119,54 +119,25 @@ public class MySqlInstrumentDao extends MySqlDao implements InstrumentDaoInterfa
     // e.g. deletePlayerById(id) – remove specified entity from database
     // Felix
     @Override
-    public void deleteInstrumentById(String id) throws DaoException {
+    public void deleteInstrumentById(int id) throws DaoException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        Instrument instrument = null;
         try
         {
             connection = this.getConnection();
 
-            String query = "SELECT * FROM instruments";
+            String query = "DELETE FROM instruments WHERE id = "+ id;
             preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
 
-            while (resultSet.next())
-            {
-                int ID = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                double price = resultSet.getFloat("price");
-                String type = resultSet.getString("type");
-
-                instrument = new Instrument(ID, name, price, type);
-                System.out.println(instrument);
-            }
-
-        } catch (SQLException e)
-        {
-            throw new DaoException("delete insturment() " + e.getMessage());
-        } finally
-        {
-            try
-            {
-                if (resultSet != null)
-                {
-                    resultSet.close();
-                }
-                if (preparedStatement != null)
-                {
-                    preparedStatement.close();
-                }
-                if (connection != null)
-                {
-                    freeConnection(connection);
-                }
-            } catch (SQLException e)
-            {
-                throw new DaoException("delete instrument error: " + e.getMessage());
-            }
+        } catch (SQLException e) {
+            throw new DaoException("insturment deletion error:  " + e.getMessage());
         }
+        finally {
+            freeConnection(connection);
+        }
+
+        System.out.println("Instrument deleted from the database");
     }
 
     // Feature 4 – Insert an Entity
@@ -192,7 +163,10 @@ public class MySqlInstrumentDao extends MySqlDao implements InstrumentDaoInterfa
 
         }
         catch(SQLException e){
-            throw new DaoException("insert instrument error: "+ e.getMessage());
+            throw new DaoException("instrument insertion error: "+ e.getMessage());
+        }
+        finally {
+            freeConnection(connection);
         }
 
         System.out.println("Instrument has been succesfully added to the database");
