@@ -51,6 +51,17 @@ public class App {
 
                     InstrumentDao.getInstrumentById(id);
                     break;
+                case 4:
+                    keyboard.nextLine();
+                    System.out.println("Enter name: ");
+                    String name = keyboard.nextLine();
+                    System.out.println("Enter type: ");
+                    String type = keyboard.nextLine();
+                    System.out.println("Enter price: ");
+                    double price = keyboard.nextDouble();
+
+
+                    InstrumentDao.insertInstrument(new Instrument(0,name,price,type));
             }
 
         } while (userInput != 0);

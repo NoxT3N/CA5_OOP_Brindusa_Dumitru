@@ -175,7 +175,27 @@ public class MySqlInstrumentDao extends MySqlDao implements InstrumentDaoInterfa
     // return new entity (Player DTO) that includes the assigned auto-id.
     // Felix
     @Override
-    public Instrument insertInstrument(Instrument i) throws DaoException {
-        return null;
+    public void insertInstrument(Instrument i) throws DaoException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try{
+            connection = this.getConnection();
+            String query = "INSERT INTO Instruments (name, price, type) VALUES (?,?,?)";
+
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,i.getName());
+            preparedStatement.setDouble(2,i.getPrice());
+            preparedStatement.setString(3,i.getType());
+
+            preparedStatement.executeUpdate();
+
+        }
+        catch(SQLException e){
+            throw new DaoException("insert instrument error: "+ e.getMessage());
+        }
+
+        System.out.println("Instrument has been succesfully added to the database");
+
     }
 }
