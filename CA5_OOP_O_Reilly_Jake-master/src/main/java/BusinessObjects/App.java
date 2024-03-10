@@ -38,7 +38,7 @@ public class App {
             userInput = keyboard.nextInt();
 
             System.out.println();
-
+            int id;
             switch (userInput) {
                 case 1:
                     //IInstrumentDao.deleteInstrumentById("hi");
@@ -47,7 +47,7 @@ public class App {
                     break;
                 case 2:
                     System.out.printf("Enter id: ");
-                    int id = keyboard.nextInt();
+                    id = keyboard.nextInt();
 
                     InstrumentDao.getInstrumentById(id);
                     break;
@@ -56,7 +56,7 @@ public class App {
                     id = keyboard.nextInt();
 
                     InstrumentDao.deleteInstrumentById(id);
-
+                    break;
                 case 4:
                     keyboard.nextLine();
                     System.out.println("Enter name: ");

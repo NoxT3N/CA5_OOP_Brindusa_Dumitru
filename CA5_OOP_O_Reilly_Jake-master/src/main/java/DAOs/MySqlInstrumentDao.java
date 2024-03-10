@@ -134,7 +134,16 @@ public class MySqlInstrumentDao extends MySqlDao implements InstrumentDaoInterfa
             throw new DaoException("insturment deletion error:  " + e.getMessage());
         }
         finally {
-            freeConnection(connection);
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("instrument delete error: " + e.getMessage());
+            }
         }
 
         System.out.println("Instrument deleted from the database");
@@ -166,7 +175,16 @@ public class MySqlInstrumentDao extends MySqlDao implements InstrumentDaoInterfa
             throw new DaoException("instrument insertion error: "+ e.getMessage());
         }
         finally {
-            freeConnection(connection);
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("instrument insertion error: " + e.getMessage());
+            }
         }
 
         System.out.println("Instrument has been succesfully added to the database");
