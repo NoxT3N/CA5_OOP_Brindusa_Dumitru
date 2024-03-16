@@ -56,10 +56,6 @@ public class MySqlInstrumentDao extends MySqlDao implements InstrumentDaoInterfa
             }
         }
 
-        for (Instrument i : instrumentList) {
-            System.out.println(i.toString());
-        }
-
         return instrumentList;
     }
 
