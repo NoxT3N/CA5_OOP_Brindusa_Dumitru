@@ -7,6 +7,8 @@ import DAOs.MySqlInstrumentDao;
 import DTOs.Instrument;
 import Exceptions.DaoException;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -32,24 +34,56 @@ public class App {
                     "[2] Get instrument by name (id)\n" +
                     "[3] Delete instrument by name (id)\n" +
                     "[4] Insert an instrument\n" +
+                    "[5] Update an existing entity by id" +
+                    "[6] Filter instruments by price (asc)" +
                     "[0] Exit\n");
             System.out.printf("Enter: ");
 
             userInput = keyboard.nextInt();
 
             System.out.println();
-
+            int id;
+            List<Instrument> instruments;
             switch (userInput) {
                 case 1:
                     //IInstrumentDao.deleteInstrumentById("hi");
                     //System.out.println(InstrumentDao.getAllInstruments());
-                    InstrumentDao.getAllInstruments();
+                    instruments = InstrumentDao.getAllInstruments();
+
+                    printInstruments(instruments);
+
                     break;
                 case 2:
                     System.out.printf("Enter id: ");
-                    int id = keyboard.nextInt();
+                    id = keyboard.nextInt();
 
                     InstrumentDao.getInstrumentById(id);
+                    break;
+                case 3:
+                    System.out.println("Enter id: ");
+                    id = keyboard.nextInt();
+
+                    InstrumentDao.deleteInstrumentById(id);
+                    break;
+                case 4:
+                    keyboard.nextLine();
+                    System.out.println("Enter name: ");
+                    String name = keyboard.nextLine();
+                    System.out.println("Enter type: ");
+                    String type = keyboard.nextLine();
+                    System.out.println("Enter price: ");
+                    double price = keyboard.nextDouble();
+
+                    InstrumentDao.insertInstrument(new Instrument(0,name,price,type));
+                    break;
+                case 6:
+                    ComparePrice cp = new ComparePrice();
+                    instruments = InstrumentDao.getAllInstruments();
+
+                    Collections.sort(instruments, cp);
+
+                    printInstruments(instruments);
+
                     break;
             }
 
@@ -57,6 +91,12 @@ public class App {
 
         System.out.println("Exiting app, goodbye!");
 
+    }
+
+    public void printInstruments(List<Instrument> instruments) {
+        for (Instrument i : instruments) {
+            System.out.println(i.toString());
+        }
     }
 
 }
