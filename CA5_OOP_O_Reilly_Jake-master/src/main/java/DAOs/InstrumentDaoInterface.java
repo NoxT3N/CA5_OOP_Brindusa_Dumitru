@@ -18,5 +18,6 @@ public interface InstrumentDaoInterface {
     public void deleteInstrumentById(int id) throws DaoException;
 
     public void insertInstrument(Instrument i) throws DaoException;
+    public void updateInstrument(int id, Instrument i) throws DaoException;
 
 }
