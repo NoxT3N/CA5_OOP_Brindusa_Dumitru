@@ -88,6 +88,10 @@ public class App {
                         System.out.println("[3] price");
                         System.out.println("[0] apply changes and exit");
 
+                        while(!keyboard.hasNextInt()){
+                            System.out.println("Please enter a valid number");
+                            keyboard.next();
+                        }
                         choice = keyboard.nextInt();
                         keyboard.nextLine();
 
@@ -106,12 +110,18 @@ public class App {
                                 break;
                             case 3:
                                 System.out.println("Enter new price:");
+                                while(!keyboard.hasNextDouble()){
+                                    System.out.println("Please enter a decimal number");
+                                    keyboard.next();
+                                }
                                 price = keyboard.nextDouble();
                                 i.setPrice(price);
                                 System.out.println("Price has been set to: "+price);
                                 break;
                             case 0:
                                 break;
+                            default:
+                                System.out.println("Please enter a valid number");
                         }
                     }while(choice != 0);
 
