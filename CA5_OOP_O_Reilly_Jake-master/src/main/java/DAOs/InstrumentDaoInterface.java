@@ -2,8 +2,11 @@ package DAOs;
 
 // File by Jake O'Reilly
 
+import BusinessObjects.ComparePrice;
 import DTOs.Instrument;
 import Exceptions.DaoException;
+
+import java.util.Comparator;
 import java.util.List;
 
 public interface InstrumentDaoInterface {
