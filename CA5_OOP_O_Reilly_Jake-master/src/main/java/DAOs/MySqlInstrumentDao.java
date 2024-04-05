@@ -56,6 +56,10 @@ public class MySqlInstrumentDao extends MySqlDao implements InstrumentDaoInterfa
             }
         }
 
+        for (Instrument i : instrumentList) {
+            System.out.println(i.toString());
+        }
+
         return instrumentList;
     }
 
@@ -186,4 +190,43 @@ public class MySqlInstrumentDao extends MySqlDao implements InstrumentDaoInterfa
         System.out.println("Instrument has been succesfully added to the database");
 
     }
+
+    //Feature 5 - Update an existing Entity by ID
+    //e.g. Player updatePlayer(int id, Player p) – executes specified updates.
+    //Felix
+    @Override
+    public void updateInstrument(int id, Instrument i) throws DaoException{
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try{
+            connection = this.getConnection();
+            String query = "UPDATE instruments SET name = ?, price = ? ,type = ? WHERE id = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,i.getName());
+            preparedStatement.setDouble(2,i.getPrice());
+            preparedStatement.setString(3,i.getType());
+            preparedStatement.setInt(4,id);
+
+            preparedStatement.executeUpdate();
+
+        }catch (SQLException e){
+            throw new DaoException("update error: "+ e.getMessage());
+        }
+        finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("update error: " + e.getMessage());
+            }
+        }
+
+        System.out.println("Instrument "+id+" has been succesfully updated");
+    }
 }
+
+
