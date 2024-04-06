@@ -37,7 +37,7 @@ class AppTest {
         instruments.add(app.InstrumentDao.getInstrumentById(3));
 
         String expected = "[{\"id\":1,\"name\":\"Fender Vintera 50s Telecaster MN, Sonic Blue\",\"price\":894.0,\"type\":\"GUITAR\"},{\"id\":2,\"name\":\"Epiphone Les Paul Muse, Purple Passion Metallic\",\"price\":468.0,\"type\":\"GUITAR\"},{\"id\":3,\"name\":\"Ibanez FRH10N-RGF, Rose Gold Metallic Flat\",\"price\":563.0,\"type\":\"GUITAR\"}]";
-        String actual = jc.toJSON(instruments);
+        String actual = jc.instrumentListToJSON(instruments);
 
         assertEquals(expected,actual);
 
