@@ -47,9 +47,10 @@ public class App {
                 case 1:
                     //IInstrumentDao.deleteInstrumentById("hi");
                     //System.out.println(InstrumentDao.getAllInstruments());
-                    List<Instrument> instruments = InstrumentDao.getAllInstruments();
+                    //List<Instrument> instruments = InstrumentDao.getAllInstruments();
+                    InstrumentDao.getAllInstruments();
 
-                    printInstruments(instruments);
+                    //printInstruments(instruments);
 
                     break;
                 case 2:
