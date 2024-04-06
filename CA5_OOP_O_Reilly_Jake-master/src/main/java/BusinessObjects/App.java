@@ -57,7 +57,7 @@ public class App {
                     System.out.printf("Enter id: ");
                     id = keyboard.nextInt();
 
-                    InstrumentDao.getInstrumentById(id);
+                    System.out.println(InstrumentDao.getInstrumentById(id).toString());
                     break;
                 case 3:
                     System.out.println("Enter id: ");
