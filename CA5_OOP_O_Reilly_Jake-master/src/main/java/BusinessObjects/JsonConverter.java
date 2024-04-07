@@ -11,17 +11,17 @@ public class JsonConverter {
         this.gson = new Gson();
     }
 
-    //    Feature 7 - Convert List of Entities to a JSON String
-//    e.g. String playersListToJson( List<Player> list )
-//    Brindusa Dumitru
+    // Feature 7 - Convert List of Entities to a JSON String
+    // e.g. String playersListToJson( List<Player> list )
+    // Brindusa Dumitru
     public String instrumentListToJSON(List<Instrument> instruments){
         return gson.toJson(instruments);
     }
 
-    //    Feature 8 – Convert a single Entity by Key as a JSON String
-//    e.g. String playerToJson( Player p )
-//    Jake O'Reilly
+    // Feature 8 – Convert a single Entity by Key as a JSON String
+    // e.g. String playerToJson( Player p )
+    // Jake O'Reilly
     public String instrumentToJSON(Instrument i){
-        return "";
+        return gson.toJson(i);
     }
 }
