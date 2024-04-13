@@ -1,6 +1,6 @@
-package DAOs;
+package Server.DAOs;
 
-import Exceptions.DaoException;
+import Server.Exceptions.DaoException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

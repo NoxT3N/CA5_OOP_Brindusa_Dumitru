@@ -1,9 +1,9 @@
-package DAOs;
+package Server.DAOs;
 
 // File started by Jake O'Reilly
 
 import DTOs.Instrument;
-import Exceptions.DaoException;
+import Server.Exceptions.DaoException;
 
 import java.sql.*;
 import java.util.ArrayList;

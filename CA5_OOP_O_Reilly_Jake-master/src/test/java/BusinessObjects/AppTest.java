@@ -1,9 +1,9 @@
 package BusinessObjects;
 
-import DAOs.InstrumentDaoInterface;
-import DAOs.MySqlInstrumentDao;
+import Server.DAOs.InstrumentDaoInterface;
+import Server.DAOs.MySqlInstrumentDao;
 import DTOs.Instrument;
-import Exceptions.DaoException;
+import Server.Exceptions.DaoException;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
@@ -16,7 +16,6 @@ class AppTest {
     //Reset database with sql before test
 
     App app = new App();
-    InstrumentDaoInterface InstrumentDao = new MySqlInstrumentDao();
 
     // Ciara
     @Test

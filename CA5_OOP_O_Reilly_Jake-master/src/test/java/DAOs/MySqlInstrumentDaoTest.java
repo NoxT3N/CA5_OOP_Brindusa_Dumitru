@@ -1,7 +1,9 @@
 package DAOs;
 
+import Server.DAOs.InstrumentDaoInterface;
+import Server.DAOs.MySqlInstrumentDao;
 import DTOs.Instrument;
-import Exceptions.DaoException;
+import Server.Exceptions.DaoException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
