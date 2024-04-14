@@ -2,10 +2,10 @@ package BusinessObjects;
 
 // File started by Jake O'Reilly
 
-import DAOs.InstrumentDaoInterface;
-import DAOs.MySqlInstrumentDao;
+import Server.DAOs.InstrumentDaoInterface;
+import Server.DAOs.MySqlInstrumentDao;
 import DTOs.Instrument;
-import Exceptions.DaoException;
+import Server.Exceptions.DaoException;
 
 import java.util.*;
 
@@ -18,7 +18,7 @@ public class App {
     static int userInput = -1;
     static Scanner keyboard = new Scanner(System.in);
 
-    InstrumentDaoInterface InstrumentDao = new MySqlInstrumentDao();
+    public InstrumentDaoInterface InstrumentDao = new MySqlInstrumentDao();
 
     // Start app
     public void start() throws DaoException {

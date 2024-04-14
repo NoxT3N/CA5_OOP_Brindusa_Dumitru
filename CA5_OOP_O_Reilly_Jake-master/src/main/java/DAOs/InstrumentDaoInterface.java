@@ -6,6 +6,7 @@ import BusinessObjects.ComparePrice;
 import DTOs.Instrument;
 import Exceptions.DaoException;
 
+import java.io.FileNotFoundException;
 import java.util.Comparator;
 import java.util.List;
 
@@ -20,4 +21,5 @@ public interface InstrumentDaoInterface {
     public void insertInstrument(Instrument i) throws DaoException;
     public void updateInstrument(int id, Instrument i) throws DaoException;
 
+    public void reset() throws DaoException;
 }

@@ -5,9 +5,13 @@ package DAOs;
 import DTOs.Instrument;
 import Exceptions.DaoException;
 
+import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.Scanner;
+import java.io.File;
 
 public class MySqlInstrumentDao extends MySqlDao implements InstrumentDaoInterface {
 
@@ -71,7 +75,7 @@ public class MySqlInstrumentDao extends MySqlDao implements InstrumentDaoInterfa
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet resultSet = null;
-        Instrument instrument = new Instrument();
+        Instrument instrument = null;
 
         try {
             conn = this.getConnection();
@@ -226,6 +230,43 @@ public class MySqlInstrumentDao extends MySqlDao implements InstrumentDaoInterfa
         }
 
         System.out.println("Instrument "+id+" has been succesfully updated");
+    }
+
+    @Override
+    public void reset() throws DaoException {
+        System.out.println("hello reset is being run");
+        Connection conn = null;
+        Statement stmt = null;
+        String query;
+
+        try {
+            Scanner scanner = new Scanner(new File("instrumentShopDB.sql"));
+
+            while (scanner.hasNextLine()) {
+                conn = this.getConnection();
+                query = scanner.nextLine();
+                stmt = conn.createStatement();
+                stmt.executeUpdate(query);
+            }
+        }
+        catch (SQLException | FileNotFoundException e) {
+            throw new DaoException("reset() " + e.getMessage());
+        }
+        finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    freeConnection(conn);
+                }
+            }
+            catch (SQLException e) {
+                throw new DaoException("reset() " + e.getMessage());
+            }
+        }
+
+        System.out.println("Successfully reset the DB");
     }
 }
 
