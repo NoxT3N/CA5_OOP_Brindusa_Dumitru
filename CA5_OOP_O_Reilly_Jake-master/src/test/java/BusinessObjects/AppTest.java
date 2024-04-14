@@ -16,6 +16,7 @@ class AppTest {
     //Reset database with sql before test
 
     App app = new App();
+    JsonConverter jc = JsonConverter.getInstance();
 
     // Ciara
     @Test
@@ -31,7 +32,6 @@ class AppTest {
     // Felix
     @Test
     void testListToJSON() throws DaoException {
-        JsonConverter jc = new JsonConverter();
         List<Instrument> instruments = new LinkedList<>();
         instruments.add(app.InstrumentDao.getInstrumentById(1));
         instruments.add(app.InstrumentDao.getInstrumentById(2));
@@ -47,7 +47,6 @@ class AppTest {
     // Jake
     @Test
     void testInstrument1ToJSON() throws DaoException {
-        JsonConverter jc = new JsonConverter();
         Instrument instrument = app.InstrumentDao.getInstrumentById(1);
 
         String expected = "{\"id\":1,\"name\":\"Fender Vintera 50s Telecaster MN, Sonic Blue\",\"price\":894.0,\"type\":\"GUITAR\"}";
@@ -61,7 +60,6 @@ class AppTest {
     // After running: the output of the float value is 13.949999809265137 instead of 13.95 like the SQL says, maybe we have to reformat the SQL building code?
     @Test
     void testInstrument9ToJSON() throws DaoException {
-        JsonConverter jc = new JsonConverter();
         Instrument instrument = app.InstrumentDao.getInstrumentById(9);
 
         String expected = "{\"id\":9,\"name\":\"Fender Blues Deluxe Harmonica, A\",\"price\":13.95,\"type\":\"WIND\"}";

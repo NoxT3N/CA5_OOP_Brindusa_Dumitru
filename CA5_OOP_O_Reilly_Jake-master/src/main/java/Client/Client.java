@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Client {
-    JsonConverter jc = new JsonConverter();
+    JsonConverter jc = JsonConverter.getInstance();
     public static void main(String[] args) {
         Client client = new Client();
         client.start();

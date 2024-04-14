@@ -24,7 +24,7 @@ public class ClientHandler implements Runnable {
 
     public ClientHandler(Socket clientSocket, int clientNr) {
         this.InstrumentDao = new MySqlInstrumentDao();
-        this.jc = new JsonConverter();
+        this.jc = JsonConverter.getInstance();
 
         this.clientSocket = clientSocket;
         this.clientNr = clientNr;
@@ -82,7 +82,6 @@ public class ClientHandler implements Runnable {
                 System.out.println(e);
             }
         }
-
-
+        System.out.println("Server: (ClientHandler): Handler for Client " + clientNr+ " is terminating .....");
     }
 }
