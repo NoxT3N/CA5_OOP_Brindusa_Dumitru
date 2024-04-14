@@ -42,8 +42,8 @@ public class ClientHandler implements Runnable {
     public void run() {
         //implementing protocol
         try{
-            String request = socketReader.readLine();
-            while(request != null){
+            String request;
+            while((request = socketReader.readLine()) != null){
                 System.out.println("Server: (ClientHandler): Read command from client " + clientNr + ": " + request);
 
                 if(request.equals("dp all")){
