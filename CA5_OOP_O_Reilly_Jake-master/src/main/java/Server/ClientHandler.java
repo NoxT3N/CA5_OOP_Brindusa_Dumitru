@@ -54,7 +54,13 @@ public class ClientHandler implements Runnable {
                     System.out.println("Server: List of all instruments sent to the client");
                 }
                 else if(request.startsWith("dp")){
+                    String[] pieces = request.split(" ");
+                    Instrument instrument = InstrumentDao.getInstrumentById(Integer.parseInt(pieces[1]));
 
+                    String response = jc.instrumentToJSON(instrument);
+
+                    socketWriter.println(response);
+                    System.out.println("Server: Instrument with ID " + pieces[1] + " sent to the client");
                 }
                 else if(request.startsWith("add")){
 
