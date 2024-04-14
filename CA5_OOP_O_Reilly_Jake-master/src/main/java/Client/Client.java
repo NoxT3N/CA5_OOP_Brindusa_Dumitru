@@ -58,9 +58,13 @@ public class Client {
                 else if(request.startsWith("dp")){
                     //Feature 9 - “Display Entity by Id
                     //Ciara
+                    String json = socketReader.readLine();
+                    Instrument instrument = jc.JSONtoInstrument(json);
 
-                    System.out.println("Feat 9");
-
+                    System.out.println("ID: " + instrument.getId());
+                    System.out.println("Name: " + instrument.getName());
+                    System.out.println("Price: " + instrument.getPrice());
+                    System.out.println("Type: " + instrument.getType());
                 }
                 else if(request.startsWith("add")){
                     //Feature 11 – “Add an Entity”
