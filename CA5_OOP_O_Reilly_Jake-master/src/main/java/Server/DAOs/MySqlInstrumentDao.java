@@ -33,7 +33,7 @@ public class MySqlInstrumentDao extends MySqlDao implements InstrumentDaoInterfa
                 double price = resultSet.getFloat("price");
                 String type = resultSet.getString("type");
 
-                instrumentList.add(new Instrument(id, name, price, type));
+                instrumentList.add(new Instrument(id, name, Math.round(price), type));
             }
         }
         catch (SQLException e) {

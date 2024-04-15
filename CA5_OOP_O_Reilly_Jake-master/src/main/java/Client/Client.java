@@ -69,7 +69,8 @@ public class Client {
                 else if(request.startsWith("add")){
                     //Feature 11 – “Add an Entity”
                     //Jake
-
+                    String response = socketReader.readLine();
+                    System.out.println(response);
                 }
                 else if(request.startsWith("del")){
 

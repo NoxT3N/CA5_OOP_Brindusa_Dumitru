@@ -63,7 +63,28 @@ public class ClientHandler implements Runnable {
                     System.out.println("Server: Instrument with ID " + pieces[1] + " sent to the client");
                 }
                 else if(request.startsWith("add")){
+                    String[] pieces = request.split(" ");
 
+                    Instrument instrument = new Instrument();
+
+                    // Error catching, if at any point the try block fails, the catch runs
+                    try {
+                        instrument.setName(pieces[1]);
+                        instrument.setPrice(Double.parseDouble(pieces[2]));
+                        instrument.setType(pieces[3]);
+
+                        InstrumentDao.insertInstrument(instrument);
+                    } catch (IllegalArgumentException e) {
+                        String response = "Error when inserting Instrument.";
+                        socketWriter.println(response);
+                        System.out.println("Server: Error when inserting instrument");
+                        e.printStackTrace();
+                    }
+
+                    String response = "Successfully inserted Instrument.";
+
+                    socketWriter.println(response);
+                    System.out.println("Server: Instrument with ID " + pieces[1] + " sent to the client");
                 }
                 else if(request.startsWith("del")){
 
