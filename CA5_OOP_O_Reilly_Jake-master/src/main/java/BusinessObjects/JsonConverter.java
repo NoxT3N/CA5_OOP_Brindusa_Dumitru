@@ -2,6 +2,7 @@ package BusinessObjects;
 //File started by Brindusa Dumitru
 import DTOs.Instrument;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -36,21 +37,18 @@ public class JsonConverter {
         return gson.toJson(i);
     }
 
-    //Ciara Clerkin
-    public String stringArrayToJSON(String[] s) {return gson.toJson(s);}
-    public String integerToJSON(int i) {return gson.toJson(i);}
-
     //Brindusa Dumitru
     public Instrument JSONtoInstrument(String j){
         return gson.fromJson(j,Instrument.class);
     }
-
     public List<Instrument> JSONtoInstrumentList(String j){
         Type listType = new TypeToken<LinkedList<Instrument>>(){}.getType();
         return gson.fromJson(j,listType);
     }
 
     //Ciara Clerkin
+    public String stringArrayToJSON(String[] s) {return gson.toJson(s);}
+    public String integerToJSON(int i) {return gson.toJson(i);}
     public String[] JSONtoStringArray(String j) {
         Type arrayType = new TypeToken<String[]>(){}.getType();
         return gson.fromJson(j, arrayType);
@@ -58,5 +56,6 @@ public class JsonConverter {
     public int JSONtoInteger(String j) {
         return gson.fromJson(j, Integer.class);
     }
+
 
 }

@@ -76,9 +76,12 @@ public class Client {
                     System.out.println(response);
                 }
                 else if(request.startsWith("del")){
-
+                    String response = socketReader.readLine();
+                    System.out.println("Client: Response from the server: "+response);
                 }
                 else if(request.equals("imgs")){
+                    //Feature 13 - "Get Images List"
+                    //Ciara
                     String jsonArray = socketReader.readLine();
                     String[] names = jc.JSONtoStringArray(jsonArray);
 
@@ -104,7 +107,9 @@ public class Client {
                     }
                 }
                 else if(request.equals("exit")){
-
+                    String respone = socketReader.readLine();
+                    System.out.println("Client: Response from the server: "+respone);
+                    break;
                 }
                 else{
                     System.out.println("Please type in a valid command");

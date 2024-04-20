@@ -90,7 +90,19 @@ public class ClientHandler implements Runnable {
                     System.out.println("Server: Instrument with ID " + pieces[1] + " sent to the client");
                 }
                 else if(request.startsWith("del")){
+                    int id = -1;
+                    String response;
 
+                    try{
+                        id = Integer.parseInt(request.substring(request.indexOf(" ")+1));
+                    }catch (NumberFormatException e){
+                        response = "Error Parsing ID: "+e;
+                    }
+                    InstrumentDao.deleteInstrumentById(id);
+                    System.out.println("Server: Instrument with ID:"+id+" has been successfully deleted from the database");
+                    response = "Instrument has been deleted successfully";
+                    socketWriter.println(response);
+                    System.out.println("Server: Response has been sent to the client");
                 }
                 else if(request.equals("imgs")){
                     //System.out.println("Hi");
@@ -132,7 +144,8 @@ public class ClientHandler implements Runnable {
                     }
                 }
                 else if(request.equals("exit")){
-
+                    socketWriter.println("Good Bye!");
+                    System.out.println("Server: Client "+clientNr+" has disconnected from the server");
                 }
             }
         }catch (IOException e){
