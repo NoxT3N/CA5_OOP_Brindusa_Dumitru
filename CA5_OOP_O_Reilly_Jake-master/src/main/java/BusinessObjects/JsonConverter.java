@@ -36,6 +36,10 @@ public class JsonConverter {
         return gson.toJson(i);
     }
 
+    //Ciara Clerkin
+    public String stringArrayToJSON(String[] s) {return gson.toJson(s);}
+    public String integerToJSON(int i) {return gson.toJson(i);}
+
     //Brindusa Dumitru
     public Instrument JSONtoInstrument(String j){
         return gson.fromJson(j,Instrument.class);
@@ -44,6 +48,15 @@ public class JsonConverter {
     public List<Instrument> JSONtoInstrumentList(String j){
         Type listType = new TypeToken<LinkedList<Instrument>>(){}.getType();
         return gson.fromJson(j,listType);
+    }
+
+    //Ciara Clerkin
+    public String[] JSONtoStringArray(String j) {
+        Type arrayType = new TypeToken<String[]>(){}.getType();
+        return gson.fromJson(j, arrayType);
+    }
+    public int JSONtoInteger(String j) {
+        return gson.fromJson(j, Integer.class);
     }
 
 }

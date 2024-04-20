@@ -79,15 +79,26 @@ public class Client {
 
                 }
                 else if(request.equals("imgs")){
+                    String jsonArray = socketReader.readLine();
+                    String[] names = jc.JSONtoStringArray(jsonArray);
+
+                    for (int i = 1; i < names.length+1; i++) {
+                        System.out.println(i + ". " + names[i-1]);
+                    }
+
+                    int choice = kb.nextInt();
+                    String response = jc.integerToJSON(choice);
+                    socketWriter.println(response);
+
                     try {
                         //Socket clientSocket = socket.accept();
                         //System.out.println("Connected");
                         dIn = new DataInputStream(socket.getInputStream());
                         dOut = new DataOutputStream(socket.getOutputStream());
-                        receiveFile("ClientImages/harmonica.jpg");
+                        receiveFile("ClientImages/" + names[choice-1] + ".jpg");
 
-                        dIn.close();
-                        dOut.close();
+                        //dIn.close();
+                        //dOut.close();
                     } catch (Exception e) {
                       e.printStackTrace();
                     }
@@ -109,7 +120,7 @@ public class Client {
     }
 
     private static void receiveFile(String fileName) throws Exception {
-        System.out.println("Hello");
+        //System.out.println("Hello");
         FileOutputStream fos = new FileOutputStream(fileName);
 
         long bytes_remaining = dIn.readLong();

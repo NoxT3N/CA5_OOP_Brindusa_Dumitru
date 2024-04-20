@@ -95,15 +95,36 @@ public class ClientHandler implements Runnable {
                 else if(request.equals("imgs")){
                     //System.out.println("Hi");
                     //try (ServerSocket sSocket = new ServerSocket(8888)) {
+                    String[] names = {
+                            "Fender Vintera 50s Telecaster MN, Sonic Blue",
+                            "Epiphone Les Paul Muse, Purple Passion Metallic",
+                            "Ibanez FRH10N-RGF, Rose Gold Metallic Flat",
+                            "Yamaha Stage Custom Hip 20 inch 4pc Shell Pack, Matte Surf Green",
+                            "Roland A-49 MIDI Controller Keyboard, White",
+                            "Stagg 12 Key Rainbow Xylophone, With Mallets",
+                            "Odyssey OBE1200 Premiere Junior Oboe",
+                            "Casio SA 50 Mini Portable Keyboard",
+                            "Fender Blues Deluxe Harmonica, A",
+                            "Schecter J-4 Bass, Sea Foam Green"
+                    };
+
+                    String response = jc.stringArrayToJSON(names);
+                    socketWriter.println(response);
+
+                    String json = socketReader.readLine();
+                    int choice = jc.JSONtoInteger(json);
+
                     try {
                         //Socket cSocket = sSocket.accept();
                         dOut = new DataOutputStream(clientSocket.getOutputStream());
                         dIn = new DataInputStream(clientSocket.getInputStream());
 
-                        sendFile("ServerImages/fenderbluesa.jpg");
+                        //int choice = socketReader.read();
 
-                        dOut.close();
-                        dIn.close();
+                        sendFile("ServerImages/" + choice + ".jpg");
+
+                        //dOut.close();
+                        //dIn.close();
                         //cSocket.close();
                     }
                     catch (Exception e) {
