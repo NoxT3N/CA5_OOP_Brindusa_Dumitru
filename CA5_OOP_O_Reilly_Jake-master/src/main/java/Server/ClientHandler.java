@@ -7,10 +7,8 @@ import Server.DAOs.MySqlInstrumentDao;
 import DTOs.Instrument;
 import Server.Exceptions.DaoException;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
 
@@ -18,11 +16,15 @@ public class ClientHandler implements Runnable {
     BufferedReader socketReader; //allows server to receive messages from the client
     PrintWriter socketWriter; //allows server to send messages to the client
     Socket clientSocket;
+    //Socket serverSocket;
     final int clientNr; //ID nr assigned to this client
     MySqlInstrumentDao InstrumentDao;
     JsonConverter jc;
 
-    public ClientHandler(Socket clientSocket, int clientNr) {
+    private static DataOutputStream dOut = null;
+    private static DataInputStream dIn = null;
+
+    public ClientHandler(Socket clientSocket, int clientNr) throws IOException {
         this.InstrumentDao = new MySqlInstrumentDao();
         this.jc = JsonConverter.getInstance();
 
@@ -32,6 +34,7 @@ public class ClientHandler implements Runnable {
         try{
             this.socketReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             this.socketWriter = new PrintWriter(clientSocket.getOutputStream(),true);
+            //this.serverSocket = new ServerSocket(8888);
         }
         catch (IOException e){
             e.printStackTrace();
@@ -90,7 +93,22 @@ public class ClientHandler implements Runnable {
 
                 }
                 else if(request.equals("imgs")){
+                    //System.out.println("Hi");
+                    //try (ServerSocket sSocket = new ServerSocket(8888)) {
+                    try {
+                        //Socket cSocket = sSocket.accept();
+                        dOut = new DataOutputStream(clientSocket.getOutputStream());
+                        dIn = new DataInputStream(clientSocket.getInputStream());
 
+                        sendFile("ServerImages/fenderbluesa.jpg");
+
+                        dOut.close();
+                        dIn.close();
+                        //cSocket.close();
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 else if(request.equals("exit")){
 
@@ -99,6 +117,8 @@ public class ClientHandler implements Runnable {
         }catch (IOException e){
             System.out.println(e);
         } catch (DaoException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             this.socketWriter.close();
@@ -110,5 +130,23 @@ public class ClientHandler implements Runnable {
             }
         }
         System.out.println("Server: (ClientHandler): Handler for Client " + clientNr+ " is terminating .....");
+    }
+
+    private static void sendFile(String path) throws Exception {
+        System.out.println("Sending file to client");
+        int bytes = 0;
+        File file = new File(path);
+        FileInputStream fis = new FileInputStream(file);
+
+        dOut.writeLong(file.length());
+
+        byte[] buffer = new byte[4 * 1024]; //4kb buffer
+
+        while ((bytes = fis.read(buffer)) != -1) {
+            dOut.write(buffer, 0, bytes);
+            dOut.flush();
+        }
+
+        fis.close();
     }
 }

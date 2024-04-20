@@ -5,16 +5,18 @@ package Client;
 import BusinessObjects.JsonConverter;
 import DTOs.Instrument;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
+import java.net.ServerSocket;
 import java.util.List;
 import java.util.Scanner;
 
 public class Client {
     JsonConverter jc = JsonConverter.getInstance();
+
+    private static DataOutputStream dOut = null;
+    private static DataInputStream dIn = null;
+
     public static void main(String[] args) {
         Client client = new Client();
         client.start();
@@ -23,6 +25,7 @@ public class Client {
     public void start(){
         try(
                 Socket socket = new Socket("localhost", 8888);
+                //ServerSocket serverSocket = new ServerSocket(8888);
                 PrintWriter socketWriter = new PrintWriter(socket.getOutputStream(),true);
                 BufferedReader socketReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ){
@@ -76,7 +79,18 @@ public class Client {
 
                 }
                 else if(request.equals("imgs")){
+                    try {
+                        //Socket clientSocket = socket.accept();
+                        //System.out.println("Connected");
+                        dIn = new DataInputStream(socket.getInputStream());
+                        dOut = new DataOutputStream(socket.getOutputStream());
+                        receiveFile("ClientImages/harmonica.jpg");
 
+                        dIn.close();
+                        dOut.close();
+                    } catch (Exception e) {
+                      e.printStackTrace();
+                    }
                 }
                 else if(request.equals("exit")){
 
@@ -89,6 +103,33 @@ public class Client {
 
         }catch (IOException e){
             System.out.println("Client error: "+e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+    }
+
+    private static void receiveFile(String fileName) throws Exception {
+        System.out.println("Hello");
+        FileOutputStream fos = new FileOutputStream(fileName);
+
+        long bytes_remaining = dIn.readLong();
+        System.out.println("Server: file size in bytes = " + bytes_remaining);
+
+        byte[] buffer = new byte[4 * 1024];
+
+        System.out.println("Server: bytes remaining to be read from socket: ");
+        int bytes_read = 0;
+
+        while (bytes_remaining > 0 && (bytes_read = dIn.read(buffer, 0, (int)Math.min(buffer.length, bytes_remaining))) != -1) {
+            fos.write(buffer, 0, bytes_read);
+
+            bytes_remaining = bytes_remaining - bytes_read;
+
+            System.out.println(bytes_remaining + ", ");
+        }
+
+        System.out.println("File received");
+
+        fos.close();
     }
 }
